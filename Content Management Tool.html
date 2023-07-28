@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Content Management Tool</title>
+  <style>
+    .element {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Content Management Tool</h1>
+  
+  <form id="contentForm">
+    <label for="elementType">Element Type:</label>
+    <select id="elementType">
+      <option value="text">Text</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+    </select>
+    <br><br>
+    <div id="contentFields"></div>
+    <br>
+    <button type="button" onclick="addElement()">Add Element</button>
+    <button type="submit">Create Blog</button>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function addElement() {
+      var elementType = document.getElementById('elementType').value;
+      var elementContainer = document.getElementById('contentFields');
+      var elementDiv = document.createElement('div');
+      elementDiv.className = 'element';
+
+      if (elementType === 'text') {
+        var textInput = document.createElement('textarea');
+        textInput.name = 'text';
+        textInput.placeholder = 'Enter text here';
+        elementDiv.appendChild(textInput);
+      } else if (elementType === 'image') {
+        var imageInput = document.createElement('input');
+        imageInput.type = 'file';
+        imageInput.name = 'image';
+        elementDiv.appendChild(imageInput);
+      } else if (elementType === 'video') {
+        var videoInput = document.createElement('input');
+        videoInput.type = 'text';
+        videoInput.name = 'video';
+        videoInput.placeholder = 'Enter video URL';
+        elementDiv.appendChild(videoInput);
+      }
+
+      elementContainer.appendChild(elementDiv);
+    }
+
+    $(document).ready(function() {
+      $('#contentForm').submit(function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('action', 'createBlog');
+        // You can send the formData to the server using AJAX or perform any other actions here
+        console.log([...formData]); // Example: Output the form data to the console
+      });
+    });
+  </script>
+</body>
+</html>
